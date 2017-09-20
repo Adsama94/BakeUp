@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ingredients_constraint_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ingredientsBullet_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/secondaryText"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="\u2022" />
+
+    <TextView
+        android:id="@+id/actualIngredient_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/secondaryText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredientsBullet_tv"
+        app:layout_constraintLeft_toRightOf="@+id/ingredientsBullet_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="GRANULATED SUGAR" />
+
+    <TextView
+        android:id="@+id/measure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/secondaryText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/actualIngredient_tv"
+        app:layout_constraintLeft_toRightOf="@+id/actualIngredient_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="6" />
+
+    <TextView
+        android:id="@+id/quantity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/secondaryText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/measure_tv"
+        app:layout_constraintLeft_toRightOf="@+id/measure_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="CUPS" />
+
+
+</android.support.constraint.ConstraintLayout>

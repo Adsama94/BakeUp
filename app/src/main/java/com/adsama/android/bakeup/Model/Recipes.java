@@ -1,0 +1,105 @@
+package com.adsama.android.bakeup.Model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+
+public class Recipes implements Parcelable {
+
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("ingredients")
+    @Expose
+    private List<Ingredients> ingredients = null;
+    @SerializedName("steps")
+    @Expose
+    private List<Steps> steps = null;
+    @SerializedName("servings")
+    @Expose
+    private int servings;
+    @SerializedName("image")
+    @Expose
+    private String image;
+
+
+    private Recipes() {
+    }
+
+    public Recipes(int id, String name, List<Ingredients> ingredients, List<Steps> steps, int servings, String image) {
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.servings = servings;
+        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public List<Ingredients> getIngredients() {
+        return ingredients;
+    }
+
+
+    public List<Steps> getSteps() {
+        return steps;
+    }
+
+
+    public int getServings() {
+        return servings;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public final static Parcelable.Creator<Recipes> CREATOR = new Creator<Recipes>() {
+        public Recipes createFromParcel(Parcel in) {
+            Recipes instance = new Recipes();
+            instance.id = ((int) in.readValue((int.class.getClassLoader())));
+            instance.name = ((String) in.readValue((String.class.getClassLoader())));
+            in.readList(instance.ingredients, (com.adsama.android.bakeup.Model.Ingredients.class.getClassLoader()));
+            in.readList(instance.steps, (com.adsama.android.bakeup.Model.Steps.class.getClassLoader()));
+            instance.servings = ((int) in.readValue((int.class.getClassLoader())));
+            instance.image = ((String) in.readValue((String.class.getClassLoader())));
+            return instance;
+        }
+
+        public Recipes[] newArray(int size) {
+            return (new Recipes[size]);
+        }
+
+    };
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(id);
+        dest.writeValue(name);
+        dest.writeList(ingredients);
+        dest.writeList(steps);
+        dest.writeValue(servings);
+        dest.writeValue(image);
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+}

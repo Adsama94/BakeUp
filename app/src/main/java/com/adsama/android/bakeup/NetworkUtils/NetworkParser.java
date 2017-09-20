@@ -1,0 +1,28 @@
+package com.adsama.android.bakeup.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class NetworkParser {
+
+    private static final String LOG_TAG = NetworkParser.class.getSimpleName();
+    private static final String MAIN_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+
+    public static JSONArray getRecipeData() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(MAIN_URL).build();
+        try {
+            Response response = client.newCall(request).execute();
+            return new JSONArray(response.body().toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
