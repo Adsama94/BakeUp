@@ -19,7 +19,7 @@ public class NetworkParser {
         Request request = new Request.Builder().url(MAIN_URL).build();
         try {
             Response response = client.newCall(request).execute();
-            return new JSONArray(response.body().toString());
+            return new JSONArray(response.body());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
