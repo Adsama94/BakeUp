@@ -21,6 +21,8 @@
             android:layout_width="0dp"
             android:layout_height="130dp"
             android:background="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:src="@drawable/pie_place"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

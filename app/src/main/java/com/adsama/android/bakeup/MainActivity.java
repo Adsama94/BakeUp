@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_pie);
-        mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
-        mRecipePlaceHolder.setScaleType(ImageView.ScaleType.FIT_XY);
+        mRecipeName.setText(getString(R.string.nutella_pie));
         connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -104,16 +103,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_pie) {
             mToolBar.setTitle(R.string.nutella_pie);
-            mRecipeName.setText(mRecipes.set(0, null).getName());
+            mRecipeName.setText(mRecipes.get(0).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(0).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipes.get(0).getSteps().size()));
         } else if (id == R.id.nav_brownie) {
             mToolBar.setTitle(R.string.brownies);
-            mRecipeName.setText(mRecipes.set(1, null).getName());
+            mRecipeName.setText(mRecipes.get(1).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(1).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipes.get(1).getSteps().size()));
         } else if (id == R.id.nav_yellow) {
             mToolBar.setTitle(R.string.yellow_cake);
-            mRecipeName.setText(mRecipes.set(2, null).getName());
+            mRecipeName.setText(mRecipes.get(2).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(2).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipes.get(2).getSteps().size()));
         } else if (id == R.id.nav_cheese) {
             mToolBar.setTitle(R.string.cheesecake);
-            mRecipeName.setText(mRecipes.set(3, null).getName());
+            mRecipeName.setText(mRecipes.get(3).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(3).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipes.get(3).getSteps().size()));
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
