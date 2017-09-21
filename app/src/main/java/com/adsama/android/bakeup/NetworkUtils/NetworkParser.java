@@ -1,5 +1,7 @@
 package com.adsama.android.bakeup.NetworkUtils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -19,9 +21,10 @@ public class NetworkParser {
         Request request = new Request.Builder().url(MAIN_URL).build();
         try {
             Response response = client.newCall(request).execute();
-            return new JSONArray(response.body());
+            return new JSONArray(response.body().string());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+            Log.e(LOG_TAG, "EXCEPTION IS " + e);
         }
         return null;
     }
