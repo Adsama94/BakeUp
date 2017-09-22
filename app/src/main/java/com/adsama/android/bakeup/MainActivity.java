@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -19,10 +20,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adsama.android.bakeup.Adapter.IngredientsAdapter;
+import com.adsama.android.bakeup.Adapter.StepsAdapter;
+import com.adsama.android.bakeup.Model.Ingredients;
 import com.adsama.android.bakeup.Model.Recipes;
+import com.adsama.android.bakeup.Model.Steps;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
+import com.vstechlab.easyfonts.EasyFonts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ConnectivityManager connManager;
     NetworkInfo networkInfo;
     List<Recipes> mRecipes;
+    List<Ingredients> mIngredients;
+    List<Steps> mSteps;
+    IngredientsAdapter mIngredientsAdapter;
+    StepsAdapter mStepsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +81,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_pie);
         mRecipeName.setText(getString(R.string.nutella_pie));
+        mRecipeName.setTypeface(EasyFonts.droidSerifBold(this));
+        mRecipeSizeCount.setTypeface(EasyFonts.droidSerifBold(this));
+        mRecipeStepCount.setTypeface(EasyFonts.droidSerifBold(this));
         connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             NetworkAsyncTask httpRequest = new NetworkAsyncTask(this);
             httpRequest.execute();
+            displayIngredients();
+            displaySteps();
         } else {
             Snackbar snackbar = Snackbar.make(mNavigationView, getString(R.string.check_connection), Snackbar.LENGTH_LONG);
             View snackBarView = snackbar.getView();
@@ -129,5 +145,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void returnRecipeList(List<Recipes> recipesList) {
         mRecipes = recipesList;
+    }
+
+    /*******************************
+     * Helper Method to setup the ingredients recyclerview
+     */
+    private void displayIngredients() {
+        LinearLayoutManager ingredientLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mIngredientsRecyclerView.setLayoutManager(ingredientLayoutManager);
+        mIngredientsAdapter = new IngredientsAdapter(new ArrayList<Ingredients>(), this);
+        mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
+    }
+
+    /*******************************
+     * Helper Method to setup the steps recyclerview
+     */
+    private void displaySteps() {
+        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
+        mStepsAdapter = new StepsAdapter(new ArrayList<Steps>(), this);
+        mStepsRecyclerView.setAdapter(mStepsAdapter);
     }
 }
