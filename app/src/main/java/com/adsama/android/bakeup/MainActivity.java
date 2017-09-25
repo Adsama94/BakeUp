@@ -1,6 +1,7 @@
 package com.adsama.android.bakeup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,24 +13,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.adsama.android.bakeup.Adapter.IngredientsAdapter;
-import com.adsama.android.bakeup.Adapter.StepsAdapter;
-import com.adsama.android.bakeup.Model.Ingredients;
 import com.adsama.android.bakeup.Model.Recipes;
-import com.adsama.android.bakeup.Model.Steps;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
 import com.vstechlab.easyfonts.EasyFonts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,23 +50,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView mRecipePlaceHolder;
     @BindView(R.id.cv_recipe_list)
     CardView mRecipeCardView;
-    @BindView(R.id.recipe_detail_steps_recycler_view)
-    RecyclerView mStepsRecyclerView;
-    @BindView(R.id.recipe_detail_ingredients_recycler_view)
-    RecyclerView mIngredientsRecyclerView;
     ConnectivityManager connManager;
     NetworkInfo networkInfo;
     List<Recipes> mRecipes;
-    List<Ingredients> mIngredients;
-    List<Steps> mSteps;
-    IngredientsAdapter mIngredientsAdapter;
-    StepsAdapter mStepsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mRecipeCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), DetailActivity.class);
+                startActivity(i);
+            }
+        });
+        IngredientsFragment ingredientsFragment = new IngredientsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+        StepsFragment stepsFragment = new StepsFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         mToolBar.setTitle(R.string.nutella_pie);
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (networkInfo != null && networkInfo.isConnected()) {
             NetworkAsyncTask httpRequest = new NetworkAsyncTask(this);
             httpRequest.execute();
-            displayIngredients();
-            displaySteps();
         } else {
             Snackbar snackbar = Snackbar.make(mNavigationView, getString(R.string.check_connection), Snackbar.LENGTH_LONG);
             View snackBarView = snackbar.getView();
@@ -145,25 +140,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void returnRecipeList(List<Recipes> recipesList) {
         mRecipes = recipesList;
-    }
-
-    /*******************************
-     * Helper Method to setup the ingredients recyclerview
-     */
-    private void displayIngredients() {
-        LinearLayoutManager ingredientLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mIngredientsRecyclerView.setLayoutManager(ingredientLayoutManager);
-        mIngredientsAdapter = new IngredientsAdapter(new ArrayList<Ingredients>(), this);
-        mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
-    }
-
-    /*******************************
-     * Helper Method to setup the steps recyclerview
-     */
-    private void displaySteps() {
-        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
-        mStepsAdapter = new StepsAdapter(new ArrayList<Steps>(), this);
-        mStepsRecyclerView.setAdapter(mStepsAdapter);
     }
 }
