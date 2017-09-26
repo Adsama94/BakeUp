@@ -24,7 +24,35 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         mContext = context;
     }
 
-    class InstructionsHolder extends RecyclerView.ViewHolder {
+    @Override
+    public InstructionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, parent, false);
+        return new InstructionsHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(InstructionsHolder holder, int position) {
+        Ingredients ingredients = mIngredientsList.get(position);
+        holder.mActualIngredientTv.setText(ingredients.getIngredient());
+        holder.mIngredientMeasureTv.setText(ingredients.getMeasure());
+        holder.mIngredientQuantityTv.setText(String.valueOf(ingredients.getQuantity()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mIngredientsList.size();
+    }
+
+    public void setIngredientsData(ArrayList<Ingredients> ingredientsList) {
+        mIngredientsList = ingredientsList;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Ingredients> getIngredients() {
+        return mIngredientsList;
+    }
+
+    class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ConstraintLayout mIngredientsHolder;
         TextView mIngredientBulletTv, mActualIngredientTv, mIngredientMeasureTv, mIngredientQuantityTv;
@@ -40,33 +68,10 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             mIngredientQuantityTv = itemView.findViewById(R.id.quantity_tv);
             mIngredientQuantityTv.setTypeface(EasyFonts.droidSerifBold(mContext));
         }
-    }
 
-    @Override
-    public InstructionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, parent, false);
-        return new InstructionsHolder(view);
-    }
+        @Override
+        public void onClick(View view) {
 
-    @Override
-    public void onBindViewHolder(InstructionsHolder holder, int position) {
-        Ingredients ingredients = mIngredientsList.get(position);
-        holder.mActualIngredientTv.setText(ingredients.getIngredient());
-        holder.mIngredientMeasureTv.setText(ingredients.getMeasure());
-        holder.mIngredientQuantityTv.setText(ingredients.getQuantity());
-    }
-
-    @Override
-    public int getItemCount() {
-        return mIngredientsList.size();
-    }
-
-    public void setIngredientsData(ArrayList<Ingredients> ingredientsList) {
-        mIngredientsList = ingredientsList;
-        notifyDataSetChanged();
-    }
-
-    public ArrayList<Ingredients> getIngredients() {
-        return mIngredientsList;
+        }
     }
 }

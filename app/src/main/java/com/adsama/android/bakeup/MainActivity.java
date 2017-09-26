@@ -19,11 +19,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adsama.android.bakeup.Model.Ingredients;
 import com.adsama.android.bakeup.Model.Recipes;
+import com.adsama.android.bakeup.Model.Steps;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
 import com.vstechlab.easyfonts.EasyFonts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CardView mRecipeCardView;
     ConnectivityManager connManager;
     NetworkInfo networkInfo;
-    List<Recipes> mRecipes;
+    List<Recipes> mRecipesList;
+    ArrayList<Ingredients> mIngredientsList;
+    ArrayList<Steps> mStepsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
             }
         });
-        IngredientsFragment ingredientsFragment = new IngredientsFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
-        StepsFragment stepsFragment = new StepsFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         mToolBar.setTitle(R.string.nutella_pie);
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -114,24 +115,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_pie) {
             mToolBar.setTitle(R.string.nutella_pie);
-            mRecipeName.setText(mRecipes.get(0).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(0).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipes.get(0).getSteps().size()));
+            mRecipeName.setText(mRecipesList.get(0).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
+            mIngredientsList = mRecipesList.get(0).getIngredients();
+            Bundle argumentsForIngredients = new Bundle();
+            argumentsForIngredients.putParcelableArrayList("arraylist", mIngredientsList);
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setArguments(argumentsForIngredients);
+            getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+            mStepsList = mRecipesList.get(0).getSteps();
+//            Bundle argumentsForSteps = new Bundle();
+//            argumentsForSteps.putParcelableArrayList("stepslist", mStepsList);
+//            StepsFragment stepsFragment = new StepsFragment();
+//            getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         } else if (id == R.id.nav_brownie) {
             mToolBar.setTitle(R.string.brownies);
-            mRecipeName.setText(mRecipes.get(1).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(1).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipes.get(1).getSteps().size()));
+            mRecipeName.setText(mRecipesList.get(1).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
+            mIngredientsList = mRecipesList.get(1).getIngredients();
+            Bundle argumentsForIngredients = new Bundle();
+            argumentsForIngredients.putParcelableArrayList("arraylist", mIngredientsList);
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setArguments(argumentsForIngredients);
+            getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+//            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+//            getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+//            StepsFragment stepsFragment = new StepsFragment();
+//            getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         } else if (id == R.id.nav_yellow) {
             mToolBar.setTitle(R.string.yellow_cake);
-            mRecipeName.setText(mRecipes.get(2).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(2).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipes.get(2).getSteps().size()));
+            mRecipeName.setText(mRecipesList.get(2).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+            StepsFragment stepsFragment = new StepsFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         } else if (id == R.id.nav_cheese) {
             mToolBar.setTitle(R.string.cheesecake);
-            mRecipeName.setText(mRecipes.get(3).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipes.get(3).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipes.get(3).getSteps().size()));
+            mRecipeName.setText(mRecipesList.get(3).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
+//            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+//            getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+//            StepsFragment stepsFragment = new StepsFragment();
+//            getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -139,6 +169,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void returnRecipeList(List<Recipes> recipesList) {
-        mRecipes = recipesList;
+        mRecipesList = recipesList;
     }
 }

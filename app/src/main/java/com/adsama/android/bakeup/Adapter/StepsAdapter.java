@@ -25,24 +25,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
         mContext = context;
     }
 
-    class InstructionsHolder extends RecyclerView.ViewHolder {
-
-        LinearLayout mStepsLayout;
-        TextView mStepsIdTv;
-        TextView mShortDescTv;
-        ImageView mPlayButton;
-
-        InstructionsHolder(View itemView) {
-            super(itemView);
-            mStepsLayout = itemView.findViewById(R.id.steps_layout);
-            mStepsIdTv = itemView.findViewById(R.id.steps_id_tv);
-            mStepsIdTv.setTypeface(EasyFonts.droidSerifBold(mContext));
-            mShortDescTv = itemView.findViewById(R.id.shortDesc_tv);
-            mShortDescTv.setTypeface(EasyFonts.droidSerifBold(mContext));
-            mPlayButton = itemView.findViewById(R.id.forward_arrow);
-        }
-    }
-
     @Override
     public InstructionsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.steps_item, parent, false);
@@ -68,6 +50,30 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
 
     public ArrayList<Steps> getSteps(){
         return mStepsList;
+    }
+
+    class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout mStepsLayout;
+        TextView mStepsIdTv;
+        TextView mShortDescTv;
+        ImageView mPlayButton;
+
+        InstructionsHolder(View itemView) {
+            super(itemView);
+            mStepsLayout = itemView.findViewById(R.id.steps_layout);
+            mStepsIdTv = itemView.findViewById(R.id.steps_id_tv);
+            mStepsIdTv.setTypeface(EasyFonts.droidSerifBold(mContext));
+            mShortDescTv = itemView.findViewById(R.id.shortDesc_tv);
+            mShortDescTv.setTypeface(EasyFonts.droidSerifBold(mContext));
+            mPlayButton = itemView.findViewById(R.id.forward_arrow);
+        }
+
+
+        @Override
+        public void onClick(View view) {
+
+        }
     }
 
 }

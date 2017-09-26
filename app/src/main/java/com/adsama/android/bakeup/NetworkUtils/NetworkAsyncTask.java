@@ -33,10 +33,10 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, List<Recipes>> {
                 int recipeId = currentRecipe.getInt("id");
                 String recipeName = currentRecipe.getString("name");
                 JSONArray ingredientsList = currentRecipe.getJSONArray("ingredients");
-                List<Ingredients> ingredientData = new ArrayList<>();
+                ArrayList<Ingredients> ingredientData = new ArrayList<>();
                 for (int j = 0; j < recipeArray.length(); j++) {
                     JSONObject currentIngredient = ingredientsList.getJSONObject(j);
-                    int ingredientQuantity = currentIngredient.getInt("quantity");
+                    long ingredientQuantity = currentIngredient.getLong("quantity");
                     String ingredientMeasure = currentIngredient.getString("measure");
                     String ingredientName = currentIngredient.getString("ingredient");
                     Ingredients ingredients = new Ingredients(ingredientQuantity, ingredientMeasure, ingredientName);

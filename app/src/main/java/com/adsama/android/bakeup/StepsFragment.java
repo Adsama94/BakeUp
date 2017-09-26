@@ -11,26 +11,34 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.adsama.android.bakeup.Adapter.StepsAdapter;
-import com.adsama.android.bakeup.Model.Recipes;
 import com.adsama.android.bakeup.Model.Steps;
-import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StepsFragment extends Fragment implements NetworkAsyncListener {
+public class StepsFragment extends Fragment {
+
+    private static final String LOG_TAG = StepsFragment.class.getSimpleName();
 
     @BindView(R.id.tv_recipe_steps_heading)
     TextView mStepsHeading;
     @BindView(R.id.recipe_detail_steps_recycler_view)
     RecyclerView mStepsRecyclerView;
     StepsAdapter mStepsAdapter;
+    ArrayList<Steps> mStepsList;
 
     public StepsFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle extras = getArguments();
+        mStepsList = new ArrayList<>();
+        mStepsList = extras.getParcelableArrayList("stepslist");
     }
 
     @Override
@@ -40,13 +48,8 @@ public class StepsFragment extends Fragment implements NetworkAsyncListener {
         mStepsHeading.setTypeface(EasyFonts.droidSerifBold(getContext()));
         LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
-        mStepsAdapter = new StepsAdapter(new ArrayList<Steps>(), getContext());
+        mStepsAdapter = new StepsAdapter(mStepsList, getContext());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         return rootView;
-    }
-
-    @Override
-    public void returnRecipeList(List<Recipes> recipesList) {
-
     }
 }

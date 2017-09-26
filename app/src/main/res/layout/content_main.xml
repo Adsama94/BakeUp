@@ -27,16 +27,12 @@
                 android:id="@+id/ingredients_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <include layout="@layout/fragment_ingredients" />
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/steps_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <include layout="@layout/fragment_steps" />
             </FrameLayout>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
