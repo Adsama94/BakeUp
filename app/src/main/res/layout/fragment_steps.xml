@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="16dp"
     tools:context="com.adsama.android.bakeup.StepsFragment">
 
     <TextView
@@ -16,16 +15,15 @@
         android:padding="15dp"
         android:text="@string/steps"
         android:textColor="@color/primaryText"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_detail_steps_recycler_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/cardColor"
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintLeft_toLeftOf="parent"

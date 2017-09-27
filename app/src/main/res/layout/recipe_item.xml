@@ -50,8 +50,7 @@
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/secondaryText"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 app:layout_constraintHorizontal_bias="0.019"
                 tools:text="Recipe Name" />
 

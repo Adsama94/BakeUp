@@ -33,7 +33,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(InstructionsHolder holder, int position) {
         Ingredients ingredients = mIngredientsList.get(position);
-        holder.mActualIngredientTv.setText(ingredients.getIngredient());
+        holder.mActualIngredientTv.setText(mContext.getResources().getString(R.string.bulletPoint) + ingredients.getIngredient());
         holder.mIngredientMeasureTv.setText(ingredients.getMeasure());
         holder.mIngredientQuantityTv.setText(String.valueOf(ingredients.getQuantity()));
     }
@@ -52,15 +52,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return mIngredientsList;
     }
 
+    public void clear() {
+        notifyDataSetChanged();
+    }
+
     class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ConstraintLayout mIngredientsHolder;
-        TextView mIngredientBulletTv, mActualIngredientTv, mIngredientMeasureTv, mIngredientQuantityTv;
+        TextView mActualIngredientTv, mIngredientMeasureTv, mIngredientQuantityTv;
 
         public InstructionsHolder(View itemView) {
             super(itemView);
             mIngredientsHolder = itemView.findViewById(R.id.ingredients_constraint_holder);
-            mIngredientBulletTv = itemView.findViewById(R.id.ingredientsBullet_tv);
             mActualIngredientTv = itemView.findViewById(R.id.actualIngredient_tv);
             mActualIngredientTv.setTypeface(EasyFonts.droidSerifBold(mContext));
             mIngredientMeasureTv = itemView.findViewById(R.id.measure_tv);
