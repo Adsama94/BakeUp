@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
     @Override
     public void returnRecipeList(List<Recipes> recipesList) {
         mRecipesList = recipesList;
