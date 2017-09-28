@@ -1,6 +1,7 @@
 package com.adsama.android.bakeup;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StepsFragment extends Fragment {
+public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
 
     private static final String LOG_TAG = StepsFragment.class.getSimpleName();
 
@@ -48,8 +49,14 @@ public class StepsFragment extends Fragment {
         mStepsHeading.setTypeface(EasyFonts.droidSerifBold(getContext()));
         LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
-        mStepsAdapter = new StepsAdapter(mStepsList, getContext());
+        mStepsAdapter = new StepsAdapter(mStepsList, getContext(), this);
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         return rootView;
+    }
+
+    @Override
+    public void playStepVideo(Steps stepsModel, int position) {
+        Intent i = new Intent(getContext(), DetailActivity.class);
+        startActivity(i);
     }
 }

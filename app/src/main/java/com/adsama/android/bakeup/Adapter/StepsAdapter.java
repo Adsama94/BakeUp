@@ -19,10 +19,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
 
     private ArrayList<Steps> mStepsList;
     private Context mContext;
+    private Callbacks mCallbacks;
 
-    public StepsAdapter(ArrayList<Steps> stepsList, Context context) {
+    public StepsAdapter(ArrayList<Steps> stepsList, Context context, Callbacks callbacks) {
         mStepsList = stepsList;
         mContext = context;
+        mCallbacks = callbacks;
     }
 
     @Override
@@ -32,10 +34,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
     }
 
     @Override
-    public void onBindViewHolder(InstructionsHolder holder, int position) {
-        Steps steps = mStepsList.get(position);
+    public void onBindViewHolder(final InstructionsHolder holder, int position) {
+        final Steps steps = mStepsList.get(position);
         holder.mStepsIdTv.setText(String.valueOf(steps.getId()));
         holder.mShortDescTv.setText(steps.getShortDescription());
+        holder.mSteps = steps;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallbacks.playStepVideo(steps, holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -54,12 +63,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
         return mStepsList;
     }
 
-    class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface Callbacks {
+        void playStepVideo(Steps stepsModel, int position);
+    }
+
+    class InstructionsHolder extends RecyclerView.ViewHolder {
 
         LinearLayout mStepsLayout;
         TextView mStepsIdTv;
         TextView mShortDescTv;
         ImageView mPlayButton;
+        Steps mSteps;
 
         InstructionsHolder(View itemView) {
             super(itemView);
@@ -70,12 +84,5 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
             mShortDescTv.setTypeface(EasyFonts.droidSerifBold(mContext));
             mPlayButton = itemView.findViewById(R.id.forward_arrow);
         }
-
-
-        @Override
-        public void onClick(View view) {
-
-        }
     }
-
 }
