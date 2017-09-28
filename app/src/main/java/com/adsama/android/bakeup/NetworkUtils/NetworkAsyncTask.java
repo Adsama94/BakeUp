@@ -34,7 +34,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, List<Recipes>> {
                 String recipeName = currentRecipe.getString("name");
                 JSONArray ingredientsList = currentRecipe.getJSONArray("ingredients");
                 ArrayList<Ingredients> ingredientData = new ArrayList<>();
-                for (int j = 0; j < recipeArray.length(); j++) {
+                for (int j = 0; j < ingredientsList.length(); j++) {
                     JSONObject currentIngredient = ingredientsList.getJSONObject(j);
                     long ingredientQuantity = currentIngredient.getLong("quantity");
                     String ingredientMeasure = currentIngredient.getString("measure");

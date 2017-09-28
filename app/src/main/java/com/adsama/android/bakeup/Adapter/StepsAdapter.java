@@ -40,7 +40,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
 
     @Override
     public int getItemCount() {
-        return mStepsList.size();
+        if (mStepsList != null) {
+            return mStepsList.size();
+        } else return 0;
     }
 
     public void setStepsData(ArrayList<Steps> stepsList) {
@@ -48,7 +50,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
         notifyDataSetChanged();
     }
 
-    public ArrayList<Steps> getSteps(){
+    public ArrayList<Steps> getSteps() {
         return mStepsList;
     }
 

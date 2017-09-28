@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView mRecipeSizeCount;
     @BindView(R.id.tv_step_count)
     TextView mRecipeStepCount;
+    @BindView(R.id.instructions_tv)
+    TextView mInstructionsTv;
     @BindView(R.id.iv_recipe_image)
     ImageView mRecipePlaceHolder;
     @BindView(R.id.cv_recipe_list)
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
         mToolBar.setTitle(R.string.nutella_pie);
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_pie) {
+            mInstructionsTv.setVisibility(View.GONE);
             mToolBar.setTitle(R.string.nutella_pie);
             mRecipeName.setText(mRecipesList.get(0).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
     @Override
     public void returnRecipeList(List<Recipes> recipesList) {
         mRecipesList = recipesList;
