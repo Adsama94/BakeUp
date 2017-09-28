@@ -119,10 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeName.setText(mRecipesList.get(1).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
-            mIngredientsList.clear();
             mIngredientsList = mRecipesList.get(1).getIngredients();
             setupIngredientFragment();
-            mStepsList.clear();
             mStepsList = mRecipesList.get(1).getSteps();
             setupStepsFragment();
         } else if (id == R.id.nav_yellow) {
@@ -130,10 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeName.setText(mRecipesList.get(2).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
-            mIngredientsList.clear();
             mIngredientsList = mRecipesList.get(2).getIngredients();
             setupIngredientFragment();
-            mStepsList.clear();
             mStepsList = mRecipesList.get(2).getSteps();
             setupStepsFragment();
         } else if (id == R.id.nav_cheese) {
@@ -141,10 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeName.setText(mRecipesList.get(3).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
-            mIngredientsList.clear();
             mIngredientsList = mRecipesList.get(3).getIngredients();
             setupIngredientFragment();
-            mStepsList.clear();
             mStepsList = mRecipesList.get(3).getSteps();
             setupStepsFragment();
         }
@@ -161,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         argumentsForIngredients.putParcelableArrayList("arraylist", mIngredientsList);
         IngredientsFragment ingredientsFragment = new IngredientsFragment();
         ingredientsFragment.setArguments(argumentsForIngredients);
-        getSupportFragmentManager().beginTransaction().add(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.ingredients_fragment_container, ingredientsFragment).commit();
     }
 
     private void setupStepsFragment() {
@@ -169,6 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         argumentsForSteps.putParcelableArrayList("stepslist", mStepsList);
         StepsFragment stepsFragment = new StepsFragment();
         stepsFragment.setArguments(argumentsForSteps);
-        getSupportFragmentManager().beginTransaction().add(R.id.steps_fragment_container, stepsFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.steps_fragment_container, stepsFragment).commit();
     }
 }

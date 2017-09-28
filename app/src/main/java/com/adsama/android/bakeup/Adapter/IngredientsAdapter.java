@@ -1,11 +1,11 @@
 package com.adsama.android.bakeup.Adapter;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.adsama.android.bakeup.Model.Ingredients;
@@ -33,7 +33,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(InstructionsHolder holder, int position) {
         Ingredients ingredients = mIngredientsList.get(position);
-        holder.mActualIngredientTv.setText(mContext.getResources().getString(R.string.bulletPoint) + ingredients.getIngredient());
+        holder.mActualIngredientTv.setText(mContext.getResources().getString(R.string.bulletPoint) + ingredients.getIngredient() + mContext.getResources().getString(R.string.commaPoint));
         holder.mIngredientMeasureTv.setText(ingredients.getMeasure());
         holder.mIngredientQuantityTv.setText(String.valueOf(ingredients.getQuantity()));
     }
@@ -58,12 +58,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ConstraintLayout mIngredientsHolder;
+        LinearLayout mIngredientsHolder;
         TextView mActualIngredientTv, mIngredientMeasureTv, mIngredientQuantityTv;
 
         public InstructionsHolder(View itemView) {
             super(itemView);
-            mIngredientsHolder = itemView.findViewById(R.id.ingredients_constraint_holder);
+            mIngredientsHolder = itemView.findViewById(R.id.ingredients_layout);
             mActualIngredientTv = itemView.findViewById(R.id.actualIngredient_tv);
             mActualIngredientTv.setTypeface(EasyFonts.droidSerifBold(mContext));
             mIngredientMeasureTv = itemView.findViewById(R.id.measure_tv);

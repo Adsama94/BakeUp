@@ -15,5 +15,6 @@
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
     <string name="error_network">Error processing network request</string>
-    <string name="bulletPoint">\u2022 </string>
+    <string name="bulletPoint">\u2022</string>
+    <string name="commaPoint">, </string>
 </resources>
