@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView mRecipePlaceHolder;
     @BindView(R.id.cv_recipe_list)
     CardView mRecipeCardView;
+    @BindView(R.id.empty_layout)
+    ConstraintLayout mEmptyLayout;
     ConnectivityManager connManager;
     NetworkInfo networkInfo;
     List<Recipes> mRecipesList;
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        mEmptyLayout.setVisibility(View.VISIBLE);
+        mRecipeCardView.setVisibility(View.GONE);
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_pie);
         mRecipeName.setText(getString(R.string.nutella_pie));
@@ -109,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_pie) {
-            mInstructionsTv.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.GONE);
+            mRecipeCardView.setVisibility(View.VISIBLE);
             mToolBar.setTitle(R.string.nutella_pie);
             mRecipeName.setText(mRecipesList.get(0).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));

@@ -57,6 +57,8 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
     @Override
     public void playStepVideo(Steps stepsModel, int position) {
         Intent i = new Intent(getContext(), DetailActivity.class);
+        i.putParcelableArrayListExtra("stepsData", mStepsList);
+        i.putExtra("stepsPosition", position);
         startActivity(i);
     }
 }

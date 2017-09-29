@@ -17,5 +17,5 @@
     <string name="error_network">Error processing network request</string>
     <string name="bulletPoint">\u2022</string>
     <string name="commaPoint">, </string>
-    <string name="instruction">Please open the Navigation Drawer to select a Recipe</string>
+    <string name="instruction">Open navigation drawer to select a recipe.</string>
 </resources>

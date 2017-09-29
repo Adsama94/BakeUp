@@ -23,13 +23,7 @@
 
             <include layout="@layout/recipe_item" />
 
-            <TextView
-                android:id="@+id/instructions_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="@string/instruction"
-                android:textSize="16sp" />
+            <include layout="@layout/empty_layout" />
 
             <FrameLayout
                 android:id="@+id/ingredients_fragment_container"
