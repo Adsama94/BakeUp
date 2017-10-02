@@ -12,9 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class NetworkAsyncTask extends AsyncTask<Void, Void, List<Recipes>> {
+public class NetworkAsyncTask extends AsyncTask<Void, Void, ArrayList<Recipes>> {
 
     private static final String LOG_TAG = NetworkAsyncTask.class.getSimpleName();
     private NetworkAsyncListener networkAsyncListener;
@@ -24,7 +23,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, List<Recipes>> {
     }
 
     @Override
-    protected List<Recipes> doInBackground(Void... voids) {
+    protected ArrayList<Recipes> doInBackground(Void... voids) {
         ArrayList<Recipes> recipeList = new ArrayList<>();
         JSONArray recipeArray = NetworkParser.getRecipeData();
         try {
@@ -68,7 +67,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, List<Recipes>> {
     }
 
     @Override
-    protected void onPostExecute(List<Recipes> recipesList) {
+    protected void onPostExecute(ArrayList<Recipes> recipesList) {
         super.onPostExecute(recipesList);
         networkAsyncListener.returnRecipeList(recipesList);
     }

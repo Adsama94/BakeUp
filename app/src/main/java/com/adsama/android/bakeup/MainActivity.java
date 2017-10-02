@@ -27,7 +27,6 @@ import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NetworkAsyncListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
+    private static final String MENU_SELECTED = "selected";
+    private static final String LIST_KEY = "list_key";
     @BindView(R.id.toolbar)
     Toolbar mToolBar;
     @BindView(R.id.drawer_layout)
@@ -57,23 +57,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CardView mRecipeCardView;
     @BindView(R.id.empty_layout)
     ConstraintLayout mEmptyLayout;
+    @BindView(R.id.bake_img_logo)
+    ImageView mLogoView;
     ConnectivityManager connManager;
     NetworkInfo networkInfo;
-    List<Recipes> mRecipesList;
+    ArrayList<Recipes> mRecipesList;
     ArrayList<Ingredients> mIngredientsList;
     ArrayList<Steps> mStepsList;
+    MenuHelper menuHelper;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (savedInstanceState != null) {
+            id = savedInstanceState.getInt(MENU_SELECTED);
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
         mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
         mToolBar.setTitle(R.string.nutella_pie);
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        mLogoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
         mEmptyLayout.setVisibility(View.VISIBLE);
         mRecipeCardView.setVisibility(View.GONE);
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -97,8 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(MENU_SELECTED, id);
+        outState.putParcelableArrayList(LIST_KEY, mRecipesList);
         super.onSaveInstanceState(outState);
-
     }
 
     @Override
@@ -112,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        id = item.getItemId();
         if (id == R.id.nav_pie) {
             mEmptyLayout.setVisibility(View.GONE);
             mRecipeCardView.setVisibility(View.VISIBLE);
@@ -121,35 +136,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
             mIngredientsList = mRecipesList.get(0).getIngredients();
-            setupIngredientFragment();
             mStepsList = mRecipesList.get(0).getSteps();
+            setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_brownie) {
+            mEmptyLayout.setVisibility(View.GONE);
+            mRecipeCardView.setVisibility(View.VISIBLE);
             mToolBar.setTitle(R.string.brownies);
             mRecipeName.setText(mRecipesList.get(1).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
             mIngredientsList = mRecipesList.get(1).getIngredients();
-            setupIngredientFragment();
             mStepsList = mRecipesList.get(1).getSteps();
+            setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_yellow) {
+            mEmptyLayout.setVisibility(View.GONE);
+            mRecipeCardView.setVisibility(View.VISIBLE);
             mToolBar.setTitle(R.string.yellow_cake);
             mRecipeName.setText(mRecipesList.get(2).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
             mIngredientsList = mRecipesList.get(2).getIngredients();
-            setupIngredientFragment();
             mStepsList = mRecipesList.get(2).getSteps();
+            setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_cheese) {
+            mEmptyLayout.setVisibility(View.GONE);
+            mRecipeCardView.setVisibility(View.VISIBLE);
             mToolBar.setTitle(R.string.cheesecake);
             mRecipeName.setText(mRecipesList.get(3).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
             mIngredientsList = mRecipesList.get(3).getIngredients();
-            setupIngredientFragment();
             mStepsList = mRecipesList.get(3).getSteps();
+            setupIngredientFragment();
             setupStepsFragment();
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -157,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void returnRecipeList(List<Recipes> recipesList) {
+    public void returnRecipeList(ArrayList<Recipes> recipesList) {
         mRecipesList = recipesList;
     }
 
