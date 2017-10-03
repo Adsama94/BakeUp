@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Recipes> mRecipesList;
     ArrayList<Ingredients> mIngredientsList;
     ArrayList<Steps> mStepsList;
-    MenuHelper menuHelper;
     private int id;
 
     @Override
@@ -73,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (savedInstanceState != null) {
+            mEmptyLayout.setVisibility(View.GONE);
             id = savedInstanceState.getInt(MENU_SELECTED);
-            mDrawerLayout.openDrawer(GravityCompat.START);
+            mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
         }
         mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
         mToolBar.setTitle(R.string.nutella_pie);
@@ -129,47 +129,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         id = item.getItemId();
         if (id == R.id.nav_pie) {
-            mEmptyLayout.setVisibility(View.GONE);
-            mRecipeCardView.setVisibility(View.VISIBLE);
-            mToolBar.setTitle(R.string.nutella_pie);
-            mRecipeName.setText(mRecipesList.get(0).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
-            mIngredientsList = mRecipesList.get(0).getIngredients();
-            mStepsList = mRecipesList.get(0).getSteps();
+            setPie();
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_brownie) {
-            mEmptyLayout.setVisibility(View.GONE);
-            mRecipeCardView.setVisibility(View.VISIBLE);
-            mToolBar.setTitle(R.string.brownies);
-            mRecipeName.setText(mRecipesList.get(1).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
-            mIngredientsList = mRecipesList.get(1).getIngredients();
-            mStepsList = mRecipesList.get(1).getSteps();
+            setBrownie();
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_yellow) {
-            mEmptyLayout.setVisibility(View.GONE);
-            mRecipeCardView.setVisibility(View.VISIBLE);
-            mToolBar.setTitle(R.string.yellow_cake);
-            mRecipeName.setText(mRecipesList.get(2).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
-            mIngredientsList = mRecipesList.get(2).getIngredients();
-            mStepsList = mRecipesList.get(2).getSteps();
+            setYellow();
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_cheese) {
-            mEmptyLayout.setVisibility(View.GONE);
-            mRecipeCardView.setVisibility(View.VISIBLE);
-            mToolBar.setTitle(R.string.cheesecake);
-            mRecipeName.setText(mRecipesList.get(3).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
-            mIngredientsList = mRecipesList.get(3).getIngredients();
-            mStepsList = mRecipesList.get(3).getSteps();
+            setCheese();
             setupIngredientFragment();
             setupStepsFragment();
         }
@@ -180,6 +152,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void returnRecipeList(ArrayList<Recipes> recipesList) {
         mRecipesList = recipesList;
+    }
+
+    public void setPie() {
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mToolBar.setTitle(R.string.nutella_pie);
+        mRecipeName.setText(mRecipesList.get(0).getName());
+        mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
+        mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
+        mIngredientsList = mRecipesList.get(0).getIngredients();
+        mStepsList = mRecipesList.get(0).getSteps();
+    }
+
+    public void setBrownie() {
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mToolBar.setTitle(R.string.brownies);
+        mRecipeName.setText(mRecipesList.get(1).getName());
+        mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
+        mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
+        mIngredientsList = mRecipesList.get(1).getIngredients();
+        mStepsList = mRecipesList.get(1).getSteps();
+    }
+
+    public void setYellow() {
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mToolBar.setTitle(R.string.yellow_cake);
+        mRecipeName.setText(mRecipesList.get(2).getName());
+        mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
+        mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
+        mIngredientsList = mRecipesList.get(2).getIngredients();
+        mStepsList = mRecipesList.get(2).getSteps();
+    }
+
+    public void setCheese() {
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mToolBar.setTitle(R.string.cheesecake);
+        mRecipeName.setText(mRecipesList.get(3).getName());
+        mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
+        mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
+        mIngredientsList = mRecipesList.get(3).getIngredients();
+        mStepsList = mRecipesList.get(3).getSteps();
     }
 
     private void setupIngredientFragment() {
