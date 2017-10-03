@@ -63,6 +63,7 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
