@@ -48,6 +48,7 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_detail);
         mStepInstructionTextView = (TextView) findViewById(R.id.tv_step_instruction);
+        mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(this));
         mStepExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.exoPlayer);
         mStepsList = getIntent().getParcelableArrayListExtra("stepsData");
         int stepsPosition = getIntent().getIntExtra("stepsPosition", 0);
@@ -55,7 +56,6 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
             initializeMediaSession();
             initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
-            mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(this));
             mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
         } else {
             mStepExoPlayerView.setVisibility(View.GONE);
@@ -69,6 +69,12 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         super.onDestroy();
         releasePlayer();
         mMediaSession.setActive(false);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releasePlayer();
     }
 
     private void initializeMediaSession() {
