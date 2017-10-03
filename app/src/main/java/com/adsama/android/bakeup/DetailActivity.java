@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adsama.android.bakeup.Model.Steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -27,20 +27,18 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-
 public class DetailActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
+
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
-    @BindView(R.id.exoPlayer)
-    SimpleExoPlayerView mStepExoPlayerView;
-    @BindView(R.id.tv_step_instruction)
-    TextView mStepInstructionTextView;
+    private SimpleExoPlayerView mStepExoPlayerView;
     private SimpleExoPlayer mStepExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
+    private TextView mStepInstructionTextView;
     private MediaSessionCompat mMediaSession;
     private ArrayList<Steps> mStepsList;
 
@@ -49,14 +47,20 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_detail);
+        mStepInstructionTextView = (TextView) findViewById(R.id.tv_step_instruction);
+        mStepExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.exoPlayer);
         mStepsList = getIntent().getParcelableArrayListExtra("stepsData");
         int stepsPosition = getIntent().getIntExtra("stepsPosition", 0);
         initializeMediaSession();
         if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
             initializeMediaSession();
             initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
+            mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(this));
+            mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
+        } else {
+            mStepExoPlayerView.setVisibility(View.GONE);
+            mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
         }
-        Toast.makeText(this, "RECEIVED POSITION " + stepsPosition, Toast.LENGTH_LONG).show();
     }
 
     @Override
