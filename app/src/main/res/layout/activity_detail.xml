@@ -11,6 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
+    <ImageView
+        android:id="@+id/iv_empty_video"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/secondaryText"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_video_empty"
+        android:visibility="gone" />
+
     <View
         android:id="@+id/horizontalHalf2"
         android:layout_width="match_parent"

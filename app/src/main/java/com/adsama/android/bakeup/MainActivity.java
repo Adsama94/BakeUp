@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
         }
         mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
-        mToolBar.setTitle(R.string.nutella_pie);
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);

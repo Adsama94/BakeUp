@@ -7,6 +7,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adsama.android.bakeup.Model.Steps;
@@ -41,12 +42,14 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
     private TextView mStepInstructionTextView;
     private MediaSessionCompat mMediaSession;
     private ArrayList<Steps> mStepsList;
+    private ImageView mEmptyVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_detail);
+        mEmptyVideoView = (ImageView) findViewById(R.id.iv_empty_video);
         mStepInstructionTextView = (TextView) findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(this));
         mStepExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.exoPlayer);
@@ -59,6 +62,7 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
             mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
         } else {
             mStepExoPlayerView.setVisibility(View.GONE);
+            mEmptyVideoView.setVisibility(View.VISIBLE);
             mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
         }
     }
