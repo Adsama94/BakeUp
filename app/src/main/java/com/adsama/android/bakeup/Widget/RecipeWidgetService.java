@@ -1,4 +1,4 @@
-package com.adsama.android.bakeup;
+package com.adsama.android.bakeup.Widget;
 
 import android.app.IntentService;
 import android.content.Intent;
