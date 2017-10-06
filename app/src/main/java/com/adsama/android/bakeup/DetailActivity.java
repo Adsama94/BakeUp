@@ -34,7 +34,6 @@ import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
-
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private SimpleExoPlayerView mStepExoPlayerView;
     private SimpleExoPlayer mStepExoPlayer;
@@ -66,7 +65,6 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
             mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
         }
     }
-
 
     @Override
     protected void onDestroy() {

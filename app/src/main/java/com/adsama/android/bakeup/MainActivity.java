@@ -71,16 +71,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        if (savedInstanceState != null) {
-            mEmptyLayout.setVisibility(View.GONE);
-            id = savedInstanceState.getInt(MENU_SELECTED);
-            mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
-        }
         mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo = connManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            NetworkAsyncTask httpRequest = new NetworkAsyncTask(this);
+            httpRequest.execute();
+        } else {
+            Snackbar snackbar = Snackbar.make(mNavigationView, getString(R.string.check_connection), Snackbar.LENGTH_LONG);
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+        if (savedInstanceState != null) {
+            mEmptyLayout.setVisibility(View.GONE);
+            id = savedInstanceState.getInt(MENU_SELECTED);
+            mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
+        }
         mLogoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,17 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecipeName.setTypeface(EasyFonts.droidSerifBold(this));
         mRecipeSizeCount.setTypeface(EasyFonts.droidSerifBold(this));
         mRecipeStepCount.setTypeface(EasyFonts.droidSerifBold(this));
-        connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        networkInfo = connManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            NetworkAsyncTask httpRequest = new NetworkAsyncTask(this);
-            httpRequest.execute();
-        } else {
-            Snackbar snackbar = Snackbar.make(mNavigationView, getString(R.string.check_connection), Snackbar.LENGTH_LONG);
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            snackbar.show();
-        }
     }
 
     @Override
