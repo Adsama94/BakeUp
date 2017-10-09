@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mEmptyLayout.setVisibility(View.VISIBLE);
+        mRecipeCardView.setVisibility(View.GONE);
         mInstructionsTv.setTypeface(EasyFonts.droidSerifBold(this));
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,9 +90,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             snackbar.show();
         }
         if (savedInstanceState != null) {
-            mEmptyLayout.setVisibility(View.GONE);
-            id = savedInstanceState.getInt(MENU_SELECTED);
             mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
+            id = savedInstanceState.getInt(MENU_SELECTED);
+            if (id == R.id.nav_pie) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setPie();
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (id == R.id.nav_brownie) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setBrownie();
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (id == R.id.nav_yellow) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setYellow();
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (id == R.id.nav_cheese) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setCheese();
+                setupIngredientFragment();
+                setupStepsFragment();
+            }
+        } else {
+            mEmptyLayout.setVisibility(View.VISIBLE);
+            mRecipeCardView.setVisibility(View.GONE);
         }
         mLogoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,11 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        mEmptyLayout.setVisibility(View.VISIBLE);
-        mRecipeCardView.setVisibility(View.GONE);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setCheckedItem(R.id.nav_pie);
-        mRecipeName.setText(getString(R.string.nutella_pie));
         mRecipeName.setTypeface(EasyFonts.droidSerifBold(this));
         mRecipeSizeCount.setTypeface(EasyFonts.droidSerifBold(this));
         mRecipeStepCount.setTypeface(EasyFonts.droidSerifBold(this));

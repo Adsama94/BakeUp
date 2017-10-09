@@ -30,6 +30,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
     RecyclerView mStepsRecyclerView;
     StepsAdapter mStepsAdapter;
     ArrayList<Steps> mStepsList;
+    LinearLayoutManager stepsLayoutManager;
 
     public StepsFragment() {
     }
@@ -47,7 +48,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
         View rootView = inflater.inflate(R.layout.fragment_steps, container, false);
         ButterKnife.bind(this, rootView);
         mStepsHeading.setTypeface(EasyFonts.droidSerifBold(getContext()));
-        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mStepsRecyclerView.setLayoutManager(stepsLayoutManager);
         mStepsAdapter = new StepsAdapter(mStepsList, getContext(), this);
         mStepsRecyclerView.setAdapter(mStepsAdapter);
