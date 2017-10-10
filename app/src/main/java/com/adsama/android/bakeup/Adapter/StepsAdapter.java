@@ -54,11 +54,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.Instructions
         } else return 0;
     }
 
-    public void setStepsData(ArrayList<Steps> stepsList) {
-        mStepsList = stepsList;
-        notifyDataSetChanged();
-    }
-
     public ArrayList<Steps> getSteps() {
         return mStepsList;
     }

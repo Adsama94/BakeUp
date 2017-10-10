@@ -45,19 +45,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         } else return 0;
     }
 
-    public void setIngredientsData(ArrayList<Ingredients> ingredientsList) {
-        mIngredientsList = ingredientsList;
-        notifyDataSetChanged();
-    }
-
-    public ArrayList<Ingredients> getIngredients() {
-        return mIngredientsList;
-    }
-
-    public void clear() {
-        notifyDataSetChanged();
-    }
-
     class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         LinearLayout mIngredientsHolder;

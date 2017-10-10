@@ -34,7 +34,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NetworkAsyncListener {
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String MENU_SELECTED = "selected";
     private static final String LIST_KEY = "list_key";
     @BindView(R.id.toolbar)

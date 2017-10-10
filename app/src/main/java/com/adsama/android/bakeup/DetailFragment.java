@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     private static final String BUNDLE_KEY = "bundle_key";
     private static final String BUNDLE_POSITION = "bundle_position";
+    private static final String PLAYER_POSITION = "player_position";
     private SimpleExoPlayerView mStepExoPlayerView;
     private SimpleExoPlayer mStepExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
@@ -60,7 +62,15 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mStepExoPlayerView = rootView.findViewById(R.id.exoPlayer);
         mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
-        initializeMediaSession();
+        if (savedInstanceState != null) {
+            savedInstanceState.getLong(PLAYER_POSITION);
+            Long actualPosition = Long.valueOf(PLAYER_POSITION);
+            Log.e(LOG_TAG, "POSITION IS " + actualPosition);
+            mStepExoPlayer.seekTo(actualPosition);
+            initializeMediaSession();
+        } else {
+            initializeMediaSession();
+        }
         if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
             initializeMediaSession();
             initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
@@ -76,6 +86,10 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        TrackSelector trackSelector = new DefaultTrackSelector();
+        LoadControl loadControl = new DefaultLoadControl();
+        mStepExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
+        outState.putLong(PLAYER_POSITION, mStepExoPlayer.getCurrentPosition());
     }
 
     @Override
