@@ -64,14 +64,9 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
         if (savedInstanceState != null) {
             videoPosition = savedInstanceState.getLong(PLAYER_POSITION);
-            TrackSelector trackSelector = new DefaultTrackSelector();
-            LoadControl loadControl = new DefaultLoadControl();
-            mStepExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
-            mStepExoPlayer.seekTo(videoPosition);
             initializeMediaSession();
             initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
-        } else {
-            initializeMediaSession();
+            mStepExoPlayer.seekTo(videoPosition);
         }
         if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
             initializeMediaSession();
@@ -88,10 +83,6 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        TrackSelector trackSelector = new DefaultTrackSelector();
-        LoadControl loadControl = new DefaultLoadControl();
-        mStepExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
-        videoPosition = mStepExoPlayer.getCurrentPosition();
         outState.putLong(PLAYER_POSITION, videoPosition);
     }
 
@@ -105,6 +96,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public void onPause() {
         super.onPause();
+        videoPosition = mStepExoPlayer.getCurrentPosition();
         releasePlayer();
     }
 
