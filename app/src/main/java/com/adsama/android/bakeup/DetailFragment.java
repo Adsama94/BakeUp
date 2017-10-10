@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +48,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     private ArrayList<Steps> mStepsList;
     private ImageView mEmptyVideoView;
     private int stepsPosition;
+    private long videoPosition = 0;
 
     public DetailFragment() {
     }
@@ -63,11 +63,13 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
         if (savedInstanceState != null) {
-            savedInstanceState.getLong(PLAYER_POSITION);
-            Long actualPosition = Long.valueOf(PLAYER_POSITION);
-            Log.e(LOG_TAG, "POSITION IS " + actualPosition);
-            mStepExoPlayer.seekTo(actualPosition);
+            videoPosition = savedInstanceState.getLong(PLAYER_POSITION);
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            LoadControl loadControl = new DefaultLoadControl();
+            mStepExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
+            mStepExoPlayer.seekTo(videoPosition);
             initializeMediaSession();
+            initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
         } else {
             initializeMediaSession();
         }
@@ -89,7 +91,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         TrackSelector trackSelector = new DefaultTrackSelector();
         LoadControl loadControl = new DefaultLoadControl();
         mStepExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
-        outState.putLong(PLAYER_POSITION, mStepExoPlayer.getCurrentPosition());
+        videoPosition = mStepExoPlayer.getCurrentPosition();
+        outState.putLong(PLAYER_POSITION, videoPosition);
     }
 
     @Override
