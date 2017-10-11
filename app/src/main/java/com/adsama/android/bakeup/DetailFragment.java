@@ -1,7 +1,6 @@
 package com.adsama.android.bakeup;
 
 
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -63,11 +62,6 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mStepExoPlayerView = rootView.findViewById(R.id.exoPlayer);
         mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mStepExoPlayerView.setMinimumWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            mStepExoPlayerView.setMinimumHeight(400);
-            mStepInstructionTextView.setVisibility(View.GONE);
-        }
         if (savedInstanceState != null) {
             videoPosition = savedInstanceState.getLong(PLAYER_POSITION);
             initializeMediaSession();
