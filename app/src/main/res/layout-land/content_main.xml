@@ -31,21 +31,19 @@
 
         <FrameLayout
             android:id="@+id/ingredients_fragment_container"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_linear_layout" />
+            app:layout_constraintTop_toBottomOf="@id/recipe_linear_layout" />
 
         <FrameLayout
             android:id="@+id/steps_fragment_container"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients_fragment_container" />
+            app:layout_constraintTop_toBottomOf="@id/ingredients_fragment_container" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

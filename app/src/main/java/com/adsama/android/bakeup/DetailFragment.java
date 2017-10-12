@@ -43,11 +43,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     private SimpleExoPlayerView mStepExoPlayerView;
     private SimpleExoPlayer mStepExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
-    private TextView mStepInstructionTextView;
     private MediaSessionCompat mMediaSession;
-    private ArrayList<Steps> mStepsList;
-    private ImageView mEmptyVideoView;
-    private int stepsPosition;
     private long videoPosition = 0;
 
     public DetailFragment() {
@@ -56,11 +52,11 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        mStepsList = getArguments().getParcelableArrayList(BUNDLE_KEY);
-        stepsPosition = getArguments().getInt(BUNDLE_POSITION);
-        mEmptyVideoView = rootView.findViewById(R.id.iv_empty_video);
+        ArrayList<Steps> mStepsList = getArguments().getParcelableArrayList(BUNDLE_KEY);
+        int stepsPosition = getArguments().getInt(BUNDLE_POSITION);
+        ImageView mEmptyVideoView = rootView.findViewById(R.id.iv_empty_video);
         mStepExoPlayerView = rootView.findViewById(R.id.exoPlayer);
-        mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
+        TextView mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
         if (savedInstanceState != null) {
             videoPosition = savedInstanceState.getLong(PLAYER_POSITION);
