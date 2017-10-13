@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 
 public class IngredientsFragment extends Fragment {
 
-    private static final String LOG_TAG = IngredientsFragment.class.getSimpleName();
-
     @BindView(R.id.tv_recipe_ingredient_heading)
     TextView mIngredientHeading;
     @BindView(R.id.recipe_detail_ingredients_recycler_view)
