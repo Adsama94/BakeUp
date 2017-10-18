@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Steps> mStepsList;
     private int id;
     private boolean mTwoPane;
-    private IngredientsFragment mIngredientsFragment;
-    private StepsFragment mStepsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,9 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle argumentsForIngredients = new Bundle();
         argumentsForIngredients.putParcelableArrayList("arraylist", mIngredientsList);
         if (mIngredientsList != null) {
-            mIngredientsFragment = new IngredientsFragment();
-            mIngredientsFragment.setArguments(argumentsForIngredients);
-            getSupportFragmentManager().beginTransaction().replace(R.id.ingredients_fragment_container, mIngredientsFragment).commit();
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setArguments(argumentsForIngredients);
+            getSupportFragmentManager().beginTransaction().replace(R.id.ingredients_fragment_container, ingredientsFragment).commit();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -259,9 +257,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         argumentsForSteps.putParcelableArrayList("stepslist", mStepsList);
         argumentsForSteps.putBoolean("tabLayout", mTwoPane);
         if (mStepsList != null) {
-            mStepsFragment = new StepsFragment();
-            mStepsFragment.setArguments(argumentsForSteps);
-            getSupportFragmentManager().beginTransaction().replace(R.id.steps_fragment_container, mStepsFragment).commit();
+            StepsFragment stepsFragment = new StepsFragment();
+            stepsFragment.setArguments(argumentsForSteps);
+            getSupportFragmentManager().beginTransaction().replace(R.id.steps_fragment_container, stepsFragment).commit();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
