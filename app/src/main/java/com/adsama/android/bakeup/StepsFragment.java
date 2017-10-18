@@ -22,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
 
-    private static final String LOG_TAG = StepsFragment.class.getSimpleName();
-
+    private static final String BUNDLE_KEY = "bundle_key";
+    private static final String BUNDLE_POSITION = "bundle_position";
     @BindView(R.id.tv_recipe_steps_heading)
     TextView mStepsHeading;
     @BindView(R.id.recipe_detail_steps_recycler_view)
@@ -31,6 +31,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
     StepsAdapter mStepsAdapter;
     ArrayList<Steps> mStepsList;
     LinearLayoutManager stepsLayoutManager;
+    private boolean mTwoPane;
 
     public StepsFragment() {
     }
@@ -41,6 +42,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
         Bundle extras = getArguments();
         mStepsList = new ArrayList<>();
         mStepsList = extras.getParcelableArrayList("stepslist");
+        mTwoPane = extras.getBoolean("tabLayout");
     }
 
     @Override
@@ -57,9 +59,18 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
 
     @Override
     public void playStepVideo(Steps stepsModel, int position) {
-        Intent i = new Intent(getContext(), DetailActivity.class);
-        i.putParcelableArrayListExtra("stepsData", mStepsList);
-        i.putExtra("stepsPosition", position);
-        startActivity(i);
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putParcelableArrayList(BUNDLE_KEY, mStepsList);
+            arguments.putInt(BUNDLE_POSITION, position);
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(arguments);
+            getFragmentManager().beginTransaction().replace(R.id.recipe_detail_container, fragment).commit();
+        } else {
+            Intent i = new Intent(getContext(), DetailActivity.class);
+            i.putParcelableArrayListExtra("stepsData", mStepsList);
+            i.putExtra("stepsPosition", position);
+            startActivity(i);
+        }
     }
 }

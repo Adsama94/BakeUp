@@ -16,6 +16,7 @@
     <string name="bulletPoint">\u2022</string>
     <string name="commaPoint">, </string>
     <string name="instruction">Click on the logo to select a recipe.</string>
+    <string name="empty_video">Recipe detail and video will display here</string>
     <string name="appwidget_text">YOUR RECIPE HERE</string>
     <string name="select_widget">Select recipe widget</string>
     <string name="configure">Configure</string>

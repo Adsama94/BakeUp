@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Ingredients> mIngredientsList;
     ArrayList<Steps> mStepsList;
     private int id;
+    private boolean mTwoPane;
     private IngredientsFragment mIngredientsFragment;
     private StepsFragment mStepsFragment;
 
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mEmptyLayout.setVisibility(View.VISIBLE);
             mRecipeCardView.setVisibility(View.GONE);
         }
+        mTwoPane = findViewById(R.id.recipe_detail_container) != null;
         mLogoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupStepsFragment() {
         Bundle argumentsForSteps = new Bundle();
         argumentsForSteps.putParcelableArrayList("stepslist", mStepsList);
+        argumentsForSteps.putBoolean("tabLayout", mTwoPane);
         if (mStepsList != null) {
             mStepsFragment = new StepsFragment();
             mStepsFragment.setArguments(argumentsForSteps);
