@@ -45,12 +45,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         } else return 0;
     }
 
-    class InstructionsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class InstructionsHolder extends RecyclerView.ViewHolder {
 
         LinearLayout mIngredientsHolder;
         TextView mActualIngredientTv, mIngredientMeasureTv, mIngredientQuantityTv;
 
-        public InstructionsHolder(View itemView) {
+        InstructionsHolder(View itemView) {
             super(itemView);
             mIngredientsHolder = itemView.findViewById(R.id.ingredients_layout);
             mActualIngredientTv = itemView.findViewById(R.id.actualIngredient_tv);
@@ -59,11 +59,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             mIngredientMeasureTv.setTypeface(EasyFonts.droidSerifBold(mContext));
             mIngredientQuantityTv = itemView.findViewById(R.id.quantity_tv);
             mIngredientQuantityTv.setTypeface(EasyFonts.droidSerifBold(mContext));
-        }
-
-        @Override
-        public void onClick(View view) {
-
         }
     }
 }

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String MENU_SELECTED = "selected";
     private static final String LIST_KEY = "list_key";
+    private static final String TAB_BOOLEAN = "tab_layout";
     @BindView(R.id.toolbar)
     Toolbar mToolBar;
     @BindView(R.id.drawer_layout)
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             snackbar.show();
         }
         if (savedInstanceState != null) {
+            mTwoPane = savedInstanceState.getBoolean(TAB_BOOLEAN);
             mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
             id = savedInstanceState.getInt(MENU_SELECTED);
             if (id == R.id.nav_pie) {
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(MENU_SELECTED, id);
         outState.putParcelableArrayList(LIST_KEY, mRecipesList);
+        outState.putBoolean(TAB_BOOLEAN, mTwoPane);
         super.onSaveInstanceState(outState);
     }
 
