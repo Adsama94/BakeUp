@@ -2,8 +2,6 @@ package com.adsama.android.bakeup;
 
 
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +21,6 @@ import butterknife.ButterKnife;
 
 public class IngredientsFragment extends Fragment {
 
-    private static final String LAYOUT_STATE = "layout_state";
     @BindView(R.id.tv_recipe_ingredient_heading)
     TextView mIngredientHeading;
     @BindView(R.id.recipe_detail_ingredients_recycler_view)
@@ -31,24 +28,8 @@ public class IngredientsFragment extends Fragment {
     IngredientsAdapter mIngredientsAdapter;
     ArrayList<Ingredients> mIngredientsList;
     LinearLayoutManager ingredientLayoutManager;
-    private Parcelable mState;
 
     public IngredientsFragment() {
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            mState = savedInstanceState.getParcelable(LAYOUT_STATE);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mState != null)
-            ingredientLayoutManager.onRestoreInstanceState(mState);
     }
 
     @Override
@@ -69,12 +50,5 @@ public class IngredientsFragment extends Fragment {
         mIngredientsAdapter = new IngredientsAdapter(mIngredientsList, getContext());
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
         return rootView;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mState = ingredientLayoutManager.onSaveInstanceState();
-        outState.putParcelable(LAYOUT_STATE, mState);
     }
 }
