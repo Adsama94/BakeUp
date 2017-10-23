@@ -3,6 +3,8 @@ package com.adsama.android.bakeup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
 
     private static final String BUNDLE_KEY = "bundle_key";
     private static final String BUNDLE_POSITION = "bundle_position";
+    private static final String LAYOUT_STATE = "layout_state";
     @BindView(R.id.tv_recipe_steps_heading)
     TextView mStepsHeading;
     @BindView(R.id.recipe_detail_steps_recycler_view)
@@ -31,9 +34,25 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
     StepsAdapter mStepsAdapter;
     ArrayList<Steps> mStepsList;
     LinearLayoutManager stepsLayoutManager;
+    private Parcelable mState;
     private boolean mTwoPane;
 
     public StepsFragment() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mState != null)
+            stepsLayoutManager.onRestoreInstanceState(mState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getParcelable(LAYOUT_STATE);
+        }
     }
 
     @Override
@@ -55,6 +74,13 @@ public class StepsFragment extends Fragment implements StepsAdapter.Callbacks {
         mStepsAdapter = new StepsAdapter(mStepsList, getContext(), this);
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mState = stepsLayoutManager.onSaveInstanceState();
+        outState.putParcelable(LAYOUT_STATE, mState);
     }
 
     @Override

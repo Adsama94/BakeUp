@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String MENU_SELECTED = "selected";
     private static final String LIST_KEY = "list_key";
     private static final String TAB_BOOLEAN = "tab_layout";
+    private static final String STEP = "steps_fragment";
+    private static final String INGREDIENT = "ingredients";
     @BindView(R.id.toolbar)
     Toolbar mToolBar;
     @BindView(R.id.drawer_layout)
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Recipes> mRecipesList;
     ArrayList<Ingredients> mIngredientsList;
     ArrayList<Steps> mStepsList;
+    StepsFragment mStepFragment;
+    IngredientsFragment mIngredientFragment;
     private int id;
     private boolean mTwoPane;
 
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mTwoPane = savedInstanceState.getBoolean(TAB_BOOLEAN);
             mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
             id = savedInstanceState.getInt(MENU_SELECTED);
+            mStepFragment = (StepsFragment) getSupportFragmentManager().getFragment(savedInstanceState, STEP);
+            mIngredientFragment = (IngredientsFragment) getSupportFragmentManager().getFragment(savedInstanceState, INGREDIENT);
             if (id == R.id.nav_pie) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
@@ -142,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         outState.putInt(MENU_SELECTED, id);
         outState.putParcelableArrayList(LIST_KEY, mRecipesList);
         outState.putBoolean(TAB_BOOLEAN, mTwoPane);
+        getSupportFragmentManager().putFragment(outState, STEP, mStepFragment);
+        getSupportFragmentManager().putFragment(outState, INGREDIENT, mIngredientFragment);
         super.onSaveInstanceState(outState);
     }
 
@@ -247,9 +255,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle argumentsForIngredients = new Bundle();
         argumentsForIngredients.putParcelableArrayList("arraylist", mIngredientsList);
         if (mIngredientsList != null) {
-            IngredientsFragment ingredientsFragment = new IngredientsFragment();
-            ingredientsFragment.setArguments(argumentsForIngredients);
-            getSupportFragmentManager().beginTransaction().replace(R.id.ingredients_fragment_container, ingredientsFragment).commit();
+            mIngredientFragment = new IngredientsFragment();
+            mIngredientFragment.setArguments(argumentsForIngredients);
+            getSupportFragmentManager().beginTransaction().replace(R.id.ingredients_fragment_container, mIngredientFragment).commit();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -260,9 +268,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         argumentsForSteps.putParcelableArrayList("stepslist", mStepsList);
         argumentsForSteps.putBoolean("tabLayout", mTwoPane);
         if (mStepsList != null) {
-            StepsFragment stepsFragment = new StepsFragment();
-            stepsFragment.setArguments(argumentsForSteps);
-            getSupportFragmentManager().beginTransaction().replace(R.id.steps_fragment_container, stepsFragment).commit();
+            mStepFragment = new StepsFragment();
+            mStepFragment.setArguments(argumentsForSteps);
+            getSupportFragmentManager().beginTransaction().replace(R.id.steps_fragment_container, mStepFragment).commit();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
