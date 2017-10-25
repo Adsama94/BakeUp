@@ -1,9 +1,12 @@
 package com.adsama.android.bakeup;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -25,6 +28,8 @@ import com.adsama.android.bakeup.Model.Recipes;
 import com.adsama.android.bakeup.Model.Steps;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
+import com.adsama.android.bakeup.Widget.RecipeWidgetProvider;
+import com.google.gson.Gson;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
@@ -35,6 +40,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NetworkAsyncListener {
 
+    public static final String SHARED_PREFS_KEY = "SHARED_PREFS_KEY";
     private static final String MENU_SELECTED = "selected";
     private static final String LIST_KEY = "list_key";
     private static final String TAB_BOOLEAN = "tab_layout";
@@ -69,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     IngredientsFragment mIngredientFragment;
     private int id;
     private boolean mTwoPane;
+    private long quantity;
+    private String ingredient;
+    private String measure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
             mIngredientsList = mRecipesList.get(0).getIngredients();
             mStepsList = mRecipesList.get(0).getSteps();
+            quantity = (long) mIngredientsList.get(0).getQuantity();
+            ingredient = mIngredientsList.get(0).getIngredient();
+            measure = mIngredientsList.get(0).getMeasure();
+            makeData(quantity, measure, ingredient);
+            sendBroadcast();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -210,6 +224,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
             mIngredientsList = mRecipesList.get(1).getIngredients();
             mStepsList = mRecipesList.get(1).getSteps();
+            quantity = (long) mIngredientsList.get(1).getQuantity();
+            ingredient = mIngredientsList.get(1).getIngredient();
+            measure = mIngredientsList.get(1).getMeasure();
+            makeData(quantity, measure, ingredient);
+            sendBroadcast();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -225,6 +244,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
             mIngredientsList = mRecipesList.get(2).getIngredients();
             mStepsList = mRecipesList.get(2).getSteps();
+            quantity = (long) mIngredientsList.get(2).getQuantity();
+            ingredient = mIngredientsList.get(2).getIngredient();
+            measure = mIngredientsList.get(2).getMeasure();
+            makeData(quantity, measure, ingredient);
+            sendBroadcast();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -240,6 +264,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
             mIngredientsList = mRecipesList.get(3).getIngredients();
             mStepsList = mRecipesList.get(3).getSteps();
+            quantity = (long) mIngredientsList.get(3).getQuantity();
+            ingredient = mIngredientsList.get(3).getIngredient();
+            measure = mIngredientsList.get(3).getMeasure();
+            makeData(quantity, measure, ingredient);
+            sendBroadcast();
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
@@ -268,5 +297,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void makeData(long quantity, String measure, String ingredient) {
+        mIngredientsList.add(new Ingredients(quantity, measure, ingredient));
+        Gson gson = new Gson();
+        String json = gson.toJson(mIngredientsList);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SHARED_PREFS_KEY, json).apply();
+    }
+
+    private void sendBroadcast() {
+        Intent intent = new Intent(this, RecipeWidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
+        Toast.makeText(this, "BROADCAST SENT " + intent, Toast.LENGTH_LONG).show();
+        sendBroadcast(intent);
     }
 }
