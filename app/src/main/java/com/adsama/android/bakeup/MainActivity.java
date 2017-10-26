@@ -311,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void sendBroadcast() {
         Intent intent = new Intent(this, RecipeWidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
-        Toast.makeText(this, "BROADCAST SENT " + intent, Toast.LENGTH_LONG).show();
         sendBroadcast(intent);
     }
 }

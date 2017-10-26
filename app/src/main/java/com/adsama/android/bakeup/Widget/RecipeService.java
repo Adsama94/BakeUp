@@ -36,7 +36,6 @@ public class RecipeService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-
         }
 
         @Override
