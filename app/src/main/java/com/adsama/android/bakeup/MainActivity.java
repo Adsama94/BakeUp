@@ -30,6 +30,7 @@ import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncListener;
 import com.adsama.android.bakeup.NetworkUtils.NetworkAsyncTask;
 import com.adsama.android.bakeup.Widget.RecipeWidgetProvider;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
@@ -92,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        networkInfo = connManager.getActiveNetworkInfo();
+        if (connManager != null)
+            networkInfo = connManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             NetworkAsyncTask httpRequest = new NetworkAsyncTask(this);
             httpRequest.execute();
@@ -199,6 +201,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecipeCardView.setVisibility(View.VISIBLE);
         mToolBar.setTitle(R.string.nutella_pie);
         if (mRecipesList != null) {
+            if (mRecipesList.get(0).getImage().matches("")) {
+                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
+            } else {
+                Picasso.with(this).load(mRecipesList.get(0).getImage()).into(mRecipePlaceHolder);
+            }
             mRecipeName.setText(mRecipesList.get(0).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
@@ -219,6 +226,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecipeCardView.setVisibility(View.VISIBLE);
         mToolBar.setTitle(R.string.brownies);
         if (mRecipesList != null) {
+            if (mRecipesList.get(1).getImage().matches("")) {
+                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
+            } else {
+                Picasso.with(this).load(mRecipesList.get(1).getImage()).into(mRecipePlaceHolder);
+            }
             mRecipeName.setText(mRecipesList.get(1).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
@@ -239,6 +251,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecipeCardView.setVisibility(View.VISIBLE);
         mToolBar.setTitle(R.string.yellow_cake);
         if (mRecipesList != null) {
+            if (mRecipesList.get(2).getImage().matches("")) {
+                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
+            } else {
+                Picasso.with(this).load(mRecipesList.get(2).getImage()).into(mRecipePlaceHolder);
+            }
             mRecipeName.setText(mRecipesList.get(2).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
@@ -259,6 +276,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecipeCardView.setVisibility(View.VISIBLE);
         mToolBar.setTitle(R.string.cheesecake);
         if (mRecipesList != null) {
+            if (mRecipesList.get(3).getImage().matches("")) {
+                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
+            } else {
+                Picasso.with(this).load(mRecipesList.get(3).getImage()).into(mRecipePlaceHolder);
+            }
             mRecipeName.setText(mRecipesList.get(3).getName());
             mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
             mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
