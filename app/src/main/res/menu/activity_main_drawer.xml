@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <!--placeholder recipe names for first time app initiation-->
         <item
             android:id="@+id/nav_pie"
             android:title="@string/nutella_pie" />

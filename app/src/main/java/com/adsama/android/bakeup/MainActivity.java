@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static final String SHARED_PREFS_KEY = "SHARED_PREFS_KEY";
     private static final String MENU_SELECTED = "selected";
+    private static final String MENU_NUMBER = "menu_number";
     private static final String LIST_KEY = "list_key";
     private static final String TAB_BOOLEAN = "tab_layout";
     @BindView(R.id.toolbar)
@@ -74,11 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Steps> mStepsList;
     StepsFragment mStepFragment;
     IngredientsFragment mIngredientFragment;
+    String menuItemName;
     private int id;
+    private int arrayPosition;
     private boolean mTwoPane;
-    private long quantity;
-    private String ingredient;
-    private String measure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,28 +108,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mTwoPane = savedInstanceState.getBoolean(TAB_BOOLEAN);
             mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
             id = savedInstanceState.getInt(MENU_SELECTED);
+            arrayPosition = savedInstanceState.getInt(MENU_NUMBER);
             if (id == R.id.nav_pie) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setPie();
+                setRecipeData(0);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_brownie) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setBrownie();
+                setRecipeData(1);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_yellow) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setYellow();
+                setRecipeData(2);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_cheese) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setCheese();
+                setRecipeData(3);
                 setupIngredientFragment();
                 setupStepsFragment();
             }
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(MENU_SELECTED, id);
+        outState.putInt(MENU_NUMBER, arrayPosition);
         outState.putParcelableArrayList(LIST_KEY, mRecipesList);
         outState.putBoolean(TAB_BOOLEAN, mTwoPane);
         super.onSaveInstanceState(outState);
@@ -171,19 +173,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         id = item.getItemId();
         if (id == R.id.nav_pie) {
-            setPie();
+            arrayPosition = 0;
+            setRecipeData(arrayPosition);
+            item.setTitle(mRecipesList.get(0).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_brownie) {
-            setBrownie();
+            arrayPosition = 1;
+            setRecipeData(arrayPosition);
+            item.setTitle(mRecipesList.get(1).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_yellow) {
-            setYellow();
+            arrayPosition = 2;
+            setRecipeData(arrayPosition);
+            item.setTitle(mRecipesList.get(2).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_cheese) {
-            setCheese();
+            arrayPosition = 3;
+            setRecipeData(arrayPosition);
+            item.setTitle(mRecipesList.get(3).getName());
             setupIngredientFragment();
             setupStepsFragment();
         }
@@ -194,106 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void returnRecipeList(ArrayList<Recipes> recipesList) {
         mRecipesList = recipesList;
-    }
-
-    public void setPie() {
-        mEmptyLayout.setVisibility(View.GONE);
-        mRecipeCardView.setVisibility(View.VISIBLE);
-        mToolBar.setTitle(R.string.nutella_pie);
-        if (mRecipesList != null) {
-            if (mRecipesList.get(0).getImage().matches("")) {
-                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
-            } else {
-                Picasso.with(this).load(mRecipesList.get(0).getImage()).into(mRecipePlaceHolder);
-            }
-            mRecipeName.setText(mRecipesList.get(0).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(0).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(0).getSteps().size()));
-            mIngredientsList = mRecipesList.get(0).getIngredients();
-            mStepsList = mRecipesList.get(0).getSteps();
-            quantity = (long) mIngredientsList.get(0).getQuantity();
-            ingredient = mIngredientsList.get(0).getIngredient();
-            measure = mIngredientsList.get(0).getMeasure();
-            makeData(quantity, measure, ingredient);
-            sendBroadcast();
-        } else {
-            Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void setBrownie() {
-        mEmptyLayout.setVisibility(View.GONE);
-        mRecipeCardView.setVisibility(View.VISIBLE);
-        mToolBar.setTitle(R.string.brownies);
-        if (mRecipesList != null) {
-            if (mRecipesList.get(1).getImage().matches("")) {
-                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
-            } else {
-                Picasso.with(this).load(mRecipesList.get(1).getImage()).into(mRecipePlaceHolder);
-            }
-            mRecipeName.setText(mRecipesList.get(1).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(1).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(1).getSteps().size()));
-            mIngredientsList = mRecipesList.get(1).getIngredients();
-            mStepsList = mRecipesList.get(1).getSteps();
-            quantity = (long) mIngredientsList.get(1).getQuantity();
-            ingredient = mIngredientsList.get(1).getIngredient();
-            measure = mIngredientsList.get(1).getMeasure();
-            makeData(quantity, measure, ingredient);
-            sendBroadcast();
-        } else {
-            Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void setYellow() {
-        mEmptyLayout.setVisibility(View.GONE);
-        mRecipeCardView.setVisibility(View.VISIBLE);
-        mToolBar.setTitle(R.string.yellow_cake);
-        if (mRecipesList != null) {
-            if (mRecipesList.get(2).getImage().matches("")) {
-                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
-            } else {
-                Picasso.with(this).load(mRecipesList.get(2).getImage()).into(mRecipePlaceHolder);
-            }
-            mRecipeName.setText(mRecipesList.get(2).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(2).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(2).getSteps().size()));
-            mIngredientsList = mRecipesList.get(2).getIngredients();
-            mStepsList = mRecipesList.get(2).getSteps();
-            quantity = (long) mIngredientsList.get(2).getQuantity();
-            ingredient = mIngredientsList.get(2).getIngredient();
-            measure = mIngredientsList.get(2).getMeasure();
-            makeData(quantity, measure, ingredient);
-            sendBroadcast();
-        } else {
-            Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void setCheese() {
-        mEmptyLayout.setVisibility(View.GONE);
-        mRecipeCardView.setVisibility(View.VISIBLE);
-        mToolBar.setTitle(R.string.cheesecake);
-        if (mRecipesList != null) {
-            if (mRecipesList.get(3).getImage().matches("")) {
-                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
-            } else {
-                Picasso.with(this).load(mRecipesList.get(3).getImage()).into(mRecipePlaceHolder);
-            }
-            mRecipeName.setText(mRecipesList.get(3).getName());
-            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(3).getServings()));
-            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(3).getSteps().size()));
-            mIngredientsList = mRecipesList.get(3).getIngredients();
-            mStepsList = mRecipesList.get(3).getSteps();
-            quantity = (long) mIngredientsList.get(3).getQuantity();
-            ingredient = mIngredientsList.get(3).getIngredient();
-            measure = mIngredientsList.get(3).getMeasure();
-            makeData(quantity, measure, ingredient);
-            sendBroadcast();
-        } else {
-            Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void setupIngredientFragment() {
@@ -334,5 +244,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, RecipeWidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
         sendBroadcast(intent);
+    }
+
+    private void setRecipeData(int arrayPosition) {
+        mEmptyLayout.setVisibility(View.GONE);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mToolBar.setTitle(R.string.cheesecake);
+        if (mRecipesList != null) {
+            if (mRecipesList.get(arrayPosition).getImage().matches("")) {
+                mRecipePlaceHolder.setImageResource(R.drawable.pie_place);
+            } else {
+                Picasso.with(this).load(mRecipesList.get(arrayPosition).getImage()).into(mRecipePlaceHolder);
+            }
+            mRecipeName.setText(mRecipesList.get(arrayPosition).getName());
+            mRecipeSizeCount.setText(String.valueOf(mRecipesList.get(arrayPosition).getServings()));
+            mRecipeStepCount.setText(String.valueOf(mRecipesList.get(arrayPosition).getSteps().size()));
+            mIngredientsList = mRecipesList.get(arrayPosition).getIngredients();
+            mStepsList = mRecipesList.get(arrayPosition).getSteps();
+            long quantity = (long) mIngredientsList.get(arrayPosition).getQuantity();
+            String ingredient = mIngredientsList.get(arrayPosition).getIngredient();
+            String measure = mIngredientsList.get(arrayPosition).getMeasure();
+            makeData(quantity, measure, ingredient);
+            sendBroadcast();
+        } else {
+            Toast.makeText(this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+        }
     }
 }
