@@ -30,6 +30,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         ArrayList<Steps> mStepsList = getArguments().getParcelableArrayList(BUNDLE_KEY);
         int stepsPosition = getArguments().getInt(BUNDLE_POSITION);
         ImageView mEmptyVideoView = rootView.findViewById(R.id.iv_empty_video);
+        ImageView mEmptyThumbnailView = rootView.findViewById(R.id.iv_empty_thumbnail);
         mStepExoPlayerView = rootView.findViewById(R.id.exoPlayer);
         TextView mStepInstructionTextView = rootView.findViewById(R.id.tv_step_instruction);
         mStepInstructionTextView.setTypeface(EasyFonts.droidSerifBold(getContext()));
@@ -67,13 +69,19 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             }
         }
         if (mStepsList != null) {
-            if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("") && mStepsList.get(stepsPosition).getThumbnailURL().isEmpty()) {
+            if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
                 mEmptyVideoView.setVisibility(View.GONE);
+                if (mStepsList.get(stepsPosition).getThumbnailURL().isEmpty()) {
+                    mEmptyThumbnailView.setVisibility(View.GONE);
+                } else {
+                    Picasso.with(getContext()).load(mStepsList.get(stepsPosition).getThumbnailURL()).into(mEmptyThumbnailView);
+                }
                 initializeMediaSession();
                 initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
                 mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
             } else {
                 mStepExoPlayerView.setVisibility(View.GONE);
+                mEmptyThumbnailView.setVisibility(View.GONE);
                 mEmptyVideoView.setVisibility(View.VISIBLE);
                 mStepInstructionTextView.setText(String.valueOf(mStepsList.get(stepsPosition).getDescription()));
             }

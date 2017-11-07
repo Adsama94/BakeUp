@@ -25,6 +25,14 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_video_empty" />
 
+        <ImageView
+            android:id="@+id/iv_empty_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@color/secondaryText"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_video_empty" />
+
         <TextView
             android:id="@+id/tv_step_instruction"
             android:layout_width="wrap_content"

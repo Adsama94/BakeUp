@@ -21,6 +21,15 @@
         android:src="@drawable/ic_video_empty"
         android:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/iv_empty_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/secondaryText"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_video_empty"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_step_instruction"
         android:layout_width="wrap_content"

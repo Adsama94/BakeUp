@@ -175,25 +175,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_pie) {
             arrayPosition = 0;
             setRecipeData(arrayPosition);
-            item.setTitle(mRecipesList.get(0).getName());
+            if (mRecipesList != null)
+                item.setTitle(mRecipesList.get(0).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_brownie) {
             arrayPosition = 1;
             setRecipeData(arrayPosition);
-            item.setTitle(mRecipesList.get(1).getName());
+            if (mRecipesList != null)
+                item.setTitle(mRecipesList.get(1).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_yellow) {
             arrayPosition = 2;
             setRecipeData(arrayPosition);
-            item.setTitle(mRecipesList.get(2).getName());
+            if (mRecipesList != null)
+                item.setTitle(mRecipesList.get(2).getName());
             setupIngredientFragment();
             setupStepsFragment();
         } else if (id == R.id.nav_cheese) {
             arrayPosition = 3;
             setRecipeData(arrayPosition);
-            item.setTitle(mRecipesList.get(3).getName());
+            if (mRecipesList != null)
+                item.setTitle(mRecipesList.get(3).getName());
             setupIngredientFragment();
             setupStepsFragment();
         }
