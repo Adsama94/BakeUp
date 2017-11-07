@@ -8,6 +8,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class Steps implements Parcelable {
 
+    public final static Parcelable.Creator<Steps> CREATOR = new Creator<Steps>() {
+        public Steps createFromParcel(Parcel in) {
+            Steps instance = new Steps();
+            instance.id = ((int) in.readValue((int.class.getClassLoader())));
+            instance.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
+            instance.description = ((String) in.readValue((String.class.getClassLoader())));
+            instance.videoURL = ((String) in.readValue((String.class.getClassLoader())));
+            instance.thumbnailURL = ((String) in.readValue((String.class.getClassLoader())));
+            return instance;
+        }
+
+        public Steps[] newArray(int size) {
+            return (new Steps[size]);
+        }
+
+    };
     @SerializedName("id")
     @Expose
     private int id;
@@ -23,7 +39,6 @@ public class Steps implements Parcelable {
     @SerializedName("thumbnailURL")
     @Expose
     private String thumbnailURL;
-
 
     private Steps() {
     }
@@ -55,23 +70,6 @@ public class Steps implements Parcelable {
     public String getThumbnailURL() {
         return thumbnailURL;
     }
-
-    public final static Parcelable.Creator<Steps> CREATOR = new Creator<Steps>() {
-        public Steps createFromParcel(Parcel in) {
-            Steps instance = new Steps();
-            instance.id = ((int) in.readValue((int.class.getClassLoader())));
-            instance.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
-            instance.description = ((String) in.readValue((String.class.getClassLoader())));
-            instance.videoURL = ((String) in.readValue((String.class.getClassLoader())));
-            instance.thumbnailURL = ((String) in.readValue((String.class.getClassLoader())));
-            return instance;
-        }
-
-        public Steps[] newArray(int size) {
-            return (new Steps[size]);
-        }
-
-    };
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);

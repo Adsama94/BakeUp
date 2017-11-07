@@ -67,7 +67,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             }
         }
         if (mStepsList != null) {
-            if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("")) {
+            if (mStepsList.get(stepsPosition).getVideoURL() != null && !mStepsList.get(stepsPosition).getVideoURL().matches("") && mStepsList.get(stepsPosition).getThumbnailURL().isEmpty()) {
                 mEmptyVideoView.setVisibility(View.GONE);
                 initializeMediaSession();
                 initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
