@@ -46,6 +46,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     private PlaybackStateCompat.Builder mStateBuilder;
     private MediaSessionCompat mMediaSession;
     private long videoPosition = 0;
+    private ArrayList<Steps> mStepsList;
+    private int stepsPosition;
 
     public DetailFragment() {
     }
@@ -53,8 +55,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        ArrayList<Steps> mStepsList = getArguments().getParcelableArrayList(BUNDLE_KEY);
-        int stepsPosition = getArguments().getInt(BUNDLE_POSITION);
+        mStepsList = getArguments().getParcelableArrayList(BUNDLE_KEY);
+        stepsPosition = getArguments().getInt(BUNDLE_POSITION);
         ImageView mEmptyVideoView = rootView.findViewById(R.id.iv_empty_video);
         ImageView mEmptyThumbnailView = rootView.findViewById(R.id.iv_empty_thumbnail);
         mStepExoPlayerView = rootView.findViewById(R.id.exoPlayer);
@@ -114,6 +116,19 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             releasePlayer();
         } else {
             releasePlayer();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mStepExoPlayer != null) {
+            initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
+            mStepExoPlayer.seekTo(videoPosition);
+        } else {
+            initializeMediaSession();
+            initializeMediaPlayer(Uri.parse(mStepsList.get(stepsPosition).getVideoURL()));
+            mStepExoPlayer.seekTo(videoPosition);
         }
     }
 

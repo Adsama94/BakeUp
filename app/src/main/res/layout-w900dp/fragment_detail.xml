@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/linearLayoutDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,15 +14,13 @@
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/exoPlayer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_height="650dp"
             android:background="@color/secondaryText" />
 
         <ImageView
             android:id="@+id/iv_empty_video"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_height="650dp"
             android:background="@color/secondaryText"
             android:scaleType="centerInside"
             android:src="@drawable/ic_video_empty" />
@@ -31,8 +28,7 @@
         <ImageView
             android:id="@+id/iv_empty_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_height="650dp"
             android:background="@color/secondaryText"
             android:scaleType="centerInside"
             android:src="@drawable/ic_video_empty" />
@@ -40,10 +36,9 @@
         <TextView
             android:id="@+id/tv_step_instruction"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:padding="2dp"
             android:textSize="24sp"
             tools:text="Step Directions" />

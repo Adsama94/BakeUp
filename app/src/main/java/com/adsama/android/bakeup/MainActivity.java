@@ -112,25 +112,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (id == R.id.nav_pie) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setRecipeData(0);
+                setRecipeData(arrayPosition);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_brownie) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setRecipeData(1);
+                setRecipeData(arrayPosition);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_yellow) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setRecipeData(2);
+                setRecipeData(arrayPosition);
                 setupIngredientFragment();
                 setupStepsFragment();
             } else if (id == R.id.nav_cheese) {
                 mEmptyLayout.setVisibility(View.GONE);
                 mRecipeCardView.setVisibility(View.VISIBLE);
-                setRecipeData(3);
+                setRecipeData(arrayPosition);
                 setupIngredientFragment();
                 setupStepsFragment();
             }
