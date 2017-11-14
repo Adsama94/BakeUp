@@ -43,7 +43,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NetworkAsyncListener {
 
     public static final String SHARED_PREFS_KEY = "SHARED_PREFS_KEY";
-    private static final String MENU_SELECTED_NAME = "menu_selected_name";
     private static final String MENU_SELECTED = "selected";
     private static final String MENU_NUMBER = "menu_number";
     private static final String LIST_KEY = "list_key";
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Steps> mStepsList;
     StepsFragment mStepFragment;
     IngredientsFragment mIngredientFragment;
-    private String id;
+    private String idName;
     private int arrayPosition;
     private boolean mTwoPane;
 
@@ -106,6 +105,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             snackbar.show();
         }
         if (savedInstanceState != null) {
+            mTwoPane = savedInstanceState.getBoolean(TAB_BOOLEAN);
+            mRecipesList = savedInstanceState.getParcelableArrayList(LIST_KEY);
+            idName = savedInstanceState.getString(MENU_SELECTED);
+            arrayPosition = savedInstanceState.getInt(MENU_NUMBER);
+            if (idName.matches(getString(R.string.nutella_pie))) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setRecipeData(arrayPosition);
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (idName.matches(getString(R.string.brownies))) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setRecipeData(arrayPosition);
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (idName.matches(getString(R.string.yellow_cake))) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setRecipeData(arrayPosition);
+                setupIngredientFragment();
+                setupStepsFragment();
+            } else if (idName.matches(getString(R.string.cheesecake))) {
+                mEmptyLayout.setVisibility(View.GONE);
+                mRecipeCardView.setVisibility(View.VISIBLE);
+                setRecipeData(arrayPosition);
+                setupIngredientFragment();
+                setupStepsFragment();
+            }
         } else {
             mEmptyLayout.setVisibility(View.VISIBLE);
             mRecipeCardView.setVisibility(View.GONE);
@@ -126,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(MENU_NUMBER, arrayPosition);
+        outState.putString(MENU_SELECTED, idName);
         outState.putParcelableArrayList(LIST_KEY, mRecipesList);
         outState.putBoolean(TAB_BOOLEAN, mTwoPane);
         super.onSaveInstanceState(outState);
@@ -142,19 +171,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        id = mRecipesList.get(arrayPosition).getName();
-        if (id.matches("Nutella Pie")) {
+        idName = (String) item.getTitle();
+        if (idName.matches(getString(R.string.nutella_pie))) {
             arrayPosition = 0;
             setRecipeData(arrayPosition);
-        } else if (id.matches("Brownies")) {
+            setupIngredientFragment();
+            setupStepsFragment();
+        } else if (idName.matches(getString(R.string.brownies))) {
             arrayPosition = 1;
             setRecipeData(arrayPosition);
-        } else if (id.matches("Yellow Cake")) {
+            setupIngredientFragment();
+            setupStepsFragment();
+        } else if (idName.matches(getString(R.string.yellow_cake))) {
             arrayPosition = 2;
             setRecipeData(arrayPosition);
-        } else if (id.matches("Cheesecake")) {
+            setupIngredientFragment();
+            setupStepsFragment();
+        } else if (idName.matches(getString(R.string.cheesecake))) {
             arrayPosition = 3;
             setRecipeData(arrayPosition);
+            setupIngredientFragment();
+            setupStepsFragment();
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
