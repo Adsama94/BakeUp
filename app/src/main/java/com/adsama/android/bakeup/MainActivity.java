@@ -201,8 +201,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void returnRecipeList(ArrayList<Recipes> recipesList) {
         mRecipesList = recipesList;
         Menu navDrawerMenu = mNavigationView.getMenu();
-        for (int i = 0; i <= 3; i++) {
-            navDrawerMenu.add(mRecipesList.get(i).getName());
+        for (Recipes recipes : mRecipesList) {
+            navDrawerMenu.add(recipes.getName());
         }
     }
 

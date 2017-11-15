@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <!--<item-->
-        <!--android:id="@+id/nav_pie"-->
-        <!--android:title="@string/nutella_pie" />-->
-
-        <!--<item-->
-        <!--android:id="@+id/nav_brownie"-->
-        <!--android:title="@string/brownies" />-->
-        <!--<item-->
-        <!--android:id="@+id/nav_yellow"-->
-        <!--android:title="@string/yellow_cake" />-->
-        <!--<item-->
-        <!--android:id="@+id/nav_cheese"-->
-        <!--android:title="@string/cheesecake" />-->
-    </group>
+    <group android:checkableBehavior="single" />
 
 </menu>
